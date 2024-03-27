@@ -37,5 +37,14 @@
   	<url-pattern>/edit</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>ViewHierarchy</servlet-name>
+  	<servlet-class>Hierarchy</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewHierarchy</servlet-name>
+  	<url-pattern>/level</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
