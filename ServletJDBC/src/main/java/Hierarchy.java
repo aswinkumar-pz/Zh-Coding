@@ -28,7 +28,8 @@ public class Hierarchy extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		HashMap<Integer,Integer> ChildCount = new HashMap<>();
+		HashMap<Integer,Integer> ChildCount = new HashMap<>(); // To count number of direct juniors for each employee
+		
 		for(User user:users) {
 			ChildCount.put(user.id,0);
 		}
@@ -39,9 +40,11 @@ public class Hierarchy extends HttpServlet {
 			ChildCount.put(user.manager_id,ChildCount.get(user.manager_id)+1);
 		}
 		
-		List<List<Integer>> levels = new ArrayList<>();
+		List<List<Integer>> levels = new ArrayList<>(); // Assigning levels so that they can easily placed in the table
+		
 		List<Integer> currentLevel = new ArrayList<>();
 		List<Integer> temp = new ArrayList<>();
+		
 		currentLevel.add(1);
 		levels.add(currentLevel);
 		
@@ -58,7 +61,7 @@ public class Hierarchy extends HttpServlet {
 			levels.add(currentLevel);	
 		}
 		
-		HashMap<Integer,Integer> colspace = new HashMap<>();
+		HashMap<Integer,Integer> colspace = new HashMap<>(); // Calculating space to make colspan in the table
 		
 		for(int i=levels.size()-1;i>=0;i--) {
 			for(int j=0;j<levels.get(i).size();j++) {
@@ -74,12 +77,13 @@ public class Hierarchy extends HttpServlet {
 			}
 		}
 		
-		for(Map.Entry<Integer,Integer> map : colspace.entrySet()) {
-			System.out.print(map.getKey());
-			System.out.print(" ");
-			System.out.print(map.getValue());
-			System.out.println();
-		}
+//		for(Map.Entry<Integer,Integer> map : colspace.entrySet()) {
+//			System.out.print(map.getKey());
+//			System.out.print(" ");
+//			System.out.print(map.getValue());
+//			System.out.println();
+//		}
+		
 		for(List<Integer> i : levels) {
 			out.print("<tr>");
 			for(int j : i) {
