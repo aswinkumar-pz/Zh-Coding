@@ -72,12 +72,14 @@ public class Edit extends HttpServlet {
 			out.print("<h2>You cant select the same employee id for manager</h2>");
 			out.println("<form action='home.html'><button type='submit'>Click here to home page</button></form>");
 			out.println("<form action='edit'><button type='submit'>Click here to edit again</button></form>");
+			out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
 		}
 		else if(!managers.containsKey(manager_id)){
 			out.print("<h1>Invalid id selection!!!</h1>");
 			out.print("<h2>You cant select the juniors of this employee</h2>");
-			out.println("<form action='home.html'><button type='submit'>Click here to home page</button></form>");
+			out.println("<form action='home=='><button type='submit'>Click here to home page</button></form>");
 			out.println("<form action='edit'><button type='submit'>Click here to edit again</button></form>");
+			out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
 		}
 		else {
 			User user = new User();
@@ -91,7 +93,8 @@ public class Edit extends HttpServlet {
 				e.printStackTrace();
 			}
 			out.print("<h1>Employee edited successfully</h1>");
-			out.println("<form action='home.html'><button type='submit'>Click here to home page</button></form>");
+			out.println("<form action='home'><button type='submit'>Click here to home page</button></form>");
+			out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
 		}
 	}
 

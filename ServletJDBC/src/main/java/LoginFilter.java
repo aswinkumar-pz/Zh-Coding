@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AuthFilter extends HttpFilter implements Filter {
-	
+
+public class LoginFilter extends HttpFilter implements Filter {
+       
 	private static final long serialVersionUID = 1L;
 	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
+	
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse res = (HttpServletResponse)response;
 		HttpSession session = req.getSession();
@@ -24,6 +25,5 @@ public class AuthFilter extends HttpFilter implements Filter {
 		else {
 			res.sendRedirect("login");
 		}
-		
 	}
 }

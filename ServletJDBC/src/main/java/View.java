@@ -34,7 +34,8 @@ public class View extends HttpServlet {
 			e.printStackTrace();
 		}
 		out.print("</table>");
-		out.println("<form action='home.html'><button type='submit'>Click here to home page</button></form>");
+		out.println("<form action='home'><button type='submit'>Click here to home page</button></form>");
+		out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
 		out.print("</body>");
 		out.print("</html>");
 	}

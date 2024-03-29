@@ -55,7 +55,8 @@ public class Delete extends HttpServlet {
 		out.print("<title> Delete Employee </title>");
 		out.print("<head><body>");
 		out.print("<h1>Employee deleted successfully</h1>");
-		out.println("<form action='home.html'><button type='submit'>Click here to home page</button></form>");
+		out.println("<form action='home'><button type='submit'>Click here to home page</button></form>");
+		out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
 		out.print("</body></html>");
 		
 	}
