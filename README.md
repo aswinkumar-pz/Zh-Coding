@@ -6,3 +6,5 @@
 - #### 26/03/2024 - Started to create a CRUD application using JDBC and servlets
 - #### 27/03/2024 - Continued the same and completed all tasks
 - #### 28/03/2024 - Working on Filters and Authentication by creating a simple login logout pages
+- #### 29/03/2024 - Added filters to the JDBC crud. Started going through OAuth2 and Struts
+
