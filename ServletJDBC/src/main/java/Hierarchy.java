@@ -50,12 +50,13 @@ public class Hierarchy extends HttpServlet {
 			for(int j=0;j<levels.get(i).size();j++) {
 				if(ChildCount.get((levels.get(i)).get(j))==0) {
 					colspace.put((levels.get(i)).get(j),1);
+					
 				}
 				int id = users.get((levels.get(i)).get(j)).manager_id;
-				colspace.put(id,colspace.getOrDefault(id,0)+colspace.get((levels.get(i)).get(j)));
-				
+				colspace.put(id,colspace.getOrDefault(id,0)+colspace.get((levels.get(i)).get(j)));	
 			}
 		}
+		
 		for(Map.Entry<Integer, Integer> map:colspace.entrySet()) {
 			System.out.print(map.getKey());
 			System.out.print(" ");

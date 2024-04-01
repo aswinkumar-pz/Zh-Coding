@@ -25,7 +25,7 @@ public class View extends HttpServlet {
 		db.closeConnections();
 		for(Map.Entry<Integer,User> user : users.entrySet()) {
 			out.println("<tr>");
-			out.println("<td>");out.println(user.getValue().name);out.println("</td>");
+			out.println("<td>");out.println(user.getValue().name+"("+user.getKey()+")");out.println("</td>");
 			out.println("<td>&nbsp&nbsp</td>");
 			out.println("<td>");
 			try {

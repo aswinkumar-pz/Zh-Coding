@@ -7,4 +7,5 @@
 - #### 27/03/2024 - Continued the same and completed all tasks
 - #### 28/03/2024 - Working on Filters and Authentication by creating a simple login logout pages
 - #### 29/03/2024 - Added filters to the JDBC crud. Started going through OAuth2 and Struts
+- #### 01/04/2024 - Gone through Strut2. Made some changes in JDBC code for efficient performance
 
