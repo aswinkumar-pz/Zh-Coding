@@ -16,14 +16,13 @@ public class Delete extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.setContentType("text/html");
-		List<User> users = null;
 		PrintWriter out = response.getWriter();
-		try {
-			users = EmpDao.getAllEmployeeExceptAdmin();
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
+		DBJob db = new DBJob();
+		TreeMap<Integer,User> users = new TreeMap<>(db.executeQueryForFetch("select * from employee where id!=1"));
+		db.closeConnections();
+		
+		
+		
 		out.print("<html><head>");
 		out.print("<title> Delete Employee </title>");
 		out.print("<head><body>");
@@ -31,8 +30,8 @@ public class Delete extends HttpServlet {
 		out.println("<form method='post' action='delete'>");
 		out.println("<label>Select Employee Id to delete</label>");
 		out.println("<select name='id'>");
-		for(int i=0;i<users.size();i++) {
-			out.println("<option value='"+users.get(i).id+"'>"+users.get(i).id+" "+users.get(i).name+" "+"</option>");
+		for(Map.Entry<Integer,User> i : users.entrySet() ) {
+			out.println("<option name='manager_id' value="+i.getKey()+">"+(i.getValue()).name+"-"+i.getKey()+"</option>");
 		}
 		out.println("</select>");
 		out.println("<button type='submit'>Delete</button>");
@@ -43,12 +42,13 @@ public class Delete extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
-		try {
-			EmpDao.deleteEmployee(id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}	
+		DBJob db = new DBJob();
+		HashMap<Integer,User> hm = new HashMap<>();
+		hm = db.executeQueryForFetch("select * from employee where id="+id);
+		int manager_id = hm.get(id).manager_id;
+		db.executeUpdateQuery("update employee set manager_id="+manager_id+" where manager_id="+id);
+		db.executeUpdateQuery("delete from employee where id="+id);
+		db.closeConnections();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.print("<html><head>");

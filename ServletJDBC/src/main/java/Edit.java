@@ -3,7 +3,11 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.TreeMap;
+import java.util.Map;
+import java.util.Queue;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,30 +21,21 @@ public class Edit extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.setContentType("text/html");
-		List<User> users = null;
 		PrintWriter out = response.getWriter();
-		try {
-			users = EmpDao.getAllEmployeeExceptAdmin();
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
+		DBJob db = new DBJob();
+		HashMap<Integer,User> users = new HashMap<>();
+		users = db.executeQueryForFetch("select * from employee");
+		db.closeConnections();
+		
 		out.print("<html><head>");
 		out.print("<title> Edit Employee </title>");
 		out.print("<head><body>");
 		out.print("<h1>Edit employee</h1>");
 		out.println("<form method='post' action='edit'>");
-		out.println("<label>Select Employee Id to delete</label>");
+		out.println("<label>Select Employee Id to edit</label>");
 		out.println("<select name='id'>");
-		for(int i=0;i<users.size();i++) {
-			out.println("<option value='"+users.get(i).id+"'>"+users.get(i).id+" "+users.get(i).name+" "+"</option>");
-		}
-		out.println("</select>");
-		out.println("<label>Enter new name:</label>");
-		out.println("<input type='text' name='name'>");
-		out.println("<select name='manager_id'>");
-		for(int i=0;i<users.size();i++) {
-			out.println("<option value='"+users.get(i).id+"'>"+users.get(i).id+" "+users.get(i).name+" "+"</option>");
+		for(Map.Entry<Integer,User> user : users.entrySet() ) {
+			out.println("<option name='id' value='"+user.getKey()+"'>"+(user.getValue()).name+"-"+user.getKey()+" "+"</option>");
 		}
 		out.println("</select>");
 		out.println("<button type='submit'>Edit</button>");
@@ -51,51 +46,46 @@ public class Edit extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		int id = Integer.parseInt(request.getParameter("id"));
+		TreeMap<Integer,User> users;
+		
+		DBJob db = new DBJob();
+		users = new TreeMap<>(db.executeQueryForFetch("select * from employee"));
+		db.closeConnections();
+		User user = users.get(id);
+		
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(id);
+		users.remove(id);
+		while (!queue.isEmpty()) {
+		    int currentId = queue.poll();
+		    Iterator<Map.Entry<Integer, User>> iterator = users.entrySet().iterator();
+		    while (iterator.hasNext()) {
+		        Map.Entry<Integer, User> i = iterator.next();
+		        if (i.getValue().manager_id == currentId) {
+		            queue.add(i.getKey());
+		            iterator.remove();
+		        }
+		    }
+		}	
 		out.print("<html><head>");
 		out.print("<title> Edit Employee </title>");
 		out.print("<head><body>");
-		
-		int id = Integer.parseInt(request.getParameter("id"));
-		String name = request.getParameter("name");
-		int manager_id = Integer.parseInt(request.getParameter("manager_id"));
-		HashMap<Integer,User> managers = null;
-		
-		try {
-			managers = EmpDao.getAllEmployeeExceptJunior(id);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		if(manager_id == id) {
-			out.print("<h1>Invalid id selection!!!</h1>");
-			out.print("<h2>You cant select the same employee id for manager</h2>");
-			out.println("<form action='home.html'><button type='submit'>Click here to home page</button></form>");
-			out.println("<form action='edit'><button type='submit'>Click here to edit again</button></form>");
-			out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
-		}
-		else if(!managers.containsKey(manager_id)){
-			out.print("<h1>Invalid id selection!!!</h1>");
-			out.print("<h2>You cant select the juniors of this employee</h2>");
-			out.println("<form action='home=='><button type='submit'>Click here to home page</button></form>");
-			out.println("<form action='edit'><button type='submit'>Click here to edit again</button></form>");
-			out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
-		}
-		else {
-			User user = new User();
-			user.id = id;
-			user.name = name;
-			user.manager_id = manager_id;
-			try {
-				EmpDao.editEmployeeDetails(user);
+		out.print("<form method='post' action='edited'>");
+		out.print("<label>Enter the name</label>");
+		out.print("<input type='text' name='name' value="+user.name+">");
+		out.print("<label>Select your manager-id</label>");
+		out.print("<select name='manager_id'>");
+		for(Map.Entry<Integer,User> i : users.entrySet() ) {
+			if(i.getKey()==user.manager_id) {
+				out.println("<option name='manager_id' value="+i.getKey()+" selected>"+(i.getValue()).name+"-"+i.getKey()+"</option>");
 			}
-			catch(Exception e) {
-				e.printStackTrace();
+			else {
+				out.println("<option name='manager_id' value="+i.getKey()+">"+(i.getValue()).name+"-"+i.getKey()+"</option>");
 			}
-			out.print("<h1>Employee edited successfully</h1>");
-			out.println("<form action='home'><button type='submit'>Click here to home page</button></form>");
-			out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
 		}
+		out.println("<input type='hidden' name='id' value="+id);
+		out.println("</select>");
+		out.println("<button type='submit'>Edit details</button></form>");
 	}
-
 }

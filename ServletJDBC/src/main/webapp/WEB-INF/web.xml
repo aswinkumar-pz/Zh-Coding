@@ -38,6 +38,15 @@
   </servlet-mapping>
   
   <servlet>
+  	<servlet-name>Edited</servlet-name>
+  	<servlet-class>EditDetails</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Edited</servlet-name>
+  	<url-pattern>/edited</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
   	<servlet-name>ViewHierarchy</servlet-name>
   	<servlet-class>Hierarchy</servlet-class>
   </servlet>

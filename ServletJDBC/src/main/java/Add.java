@@ -3,7 +3,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-import java.sql.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +16,10 @@ public class Add extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException  {
 		String name = request.getParameter("name");
 		int manager_id = Integer.parseInt(request.getParameter("manager_id"));
-		try {
-			EmpDao.addEmployee(name, manager_id);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+		DBJob db = new DBJob();
+		String query = "insert into employee(name,manager_id) value('"+name+"',"+manager_id+")";
+		db.executeUpdateQuery(query);
+		db.closeConnections();
 		PrintWriter out = response.getWriter();
 		out.println("<html><head><title>Success</title></head><body>");
 		out.println("<h3>Employee details added successfully</h3>");
@@ -33,25 +30,23 @@ public class Add extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		try {
-			List<Integer> manager_id = EmpDao.getAllEmployeeId();
-			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
-			out.println("<html><head><title>Enter employee details</title></head><body>");
-			out.println("<h1>Enter employee details</h1>");
-			out.println("<form method='post' action='add'>");
-			out.println("<label>Enter employee name</label><input type='text' name='name'>");
-			out.println("<label>Select manager-id</label>");
-			out.println("<select name='manager_id'>");
-			for(int i=0;i<manager_id.size();i++) {
-				out.println("<option value='"+manager_id.get(i)+"'>"+manager_id.get(i)+"</option>");
-			}
-			out.println("</select>");
-			out.println("<input type='submit'>Submit</input>");
-			out.println("</form></body></html>");
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
+		DBJob db = new DBJob();
+		HashMap<Integer,User> hm = new HashMap<>();
+		hm = db.executeQueryForFetch("select * from employee");
+		db.closeConnections();
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.println("<html><head><title>Enter employee details</title></head><body>");
+		out.println("<h1>Enter employee details</h1>");
+		out.println("<form method='post' action='add'>");
+		out.println("<label>Enter employee name</label><input type='text' name='name'>");
+		out.println("<label>Select manager-id</label>");
+		out.println("<select name='manager_id'>");
+		for(Map.Entry<Integer,User> i:hm.entrySet()) {
+			out.println("<option value='"+i.getKey()+"'>"+(i.getValue()).name+"</option>");
 		}
+		out.println("</select>");
+		out.println("<input type='submit'>Submit</input>");
+		out.println("</form></body></html>");
 	}
 }

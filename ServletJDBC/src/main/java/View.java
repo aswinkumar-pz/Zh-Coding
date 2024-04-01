@@ -13,26 +13,30 @@ public class View extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException  {
-		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.print("<html><head>");
 		out.print("<title> View details </title>");
 		out.print("</head><body><table>");
-		out.print("<tr> <th>Id</th> <th>Name</th> <th>Manager-id</th> </tr>");
-		try {
-			List<User> users = EmpDao.getAllEmployee();
-			for(int i=0;i<users.size();i++) {
-				out.println("<tr>");
-				out.println("<td>");out.println(users.get(i).id);out.println("</td>");
-				out.println("<td>");out.println(users.get(i).name);out.println("</td>");
-				out.println("<td>");out.println(users.get(i).manager_id);out.println("</td>");
-				out.println("</tr>");
+		out.print("<tr style='text-align: left;'>  <th>Name</th> <th>&nbsp&nbsp</th><th>Manager-id</th> </tr>");
+		DBJob db = new DBJob();
+		HashMap<Integer,User> u = db.executeQueryForFetch("select * from employee order by id");
+		TreeMap<Integer,User> users = new TreeMap<>(u);
+		db.closeConnections();
+		for(Map.Entry<Integer,User> user : users.entrySet()) {
+			out.println("<tr>");
+			out.println("<td>");out.println(user.getValue().name);out.println("</td>");
+			out.println("<td>&nbsp&nbsp</td>");
+			out.println("<td>");
+			try {
+				out.println(users.get(user.getValue().manager_id).name + "-");out.println(user.getValue().manager_id);
+			} catch(Exception e) {
+				out.println("None");
 			}
+			out.println("</td>");
+			out.println("</tr>");
 		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		db.closeConnections();
 		out.print("</table>");
 		out.println("<form action='home'><button type='submit'>Click here to home page</button></form>");
 		out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
