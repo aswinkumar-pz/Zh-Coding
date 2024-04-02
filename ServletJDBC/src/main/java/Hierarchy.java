@@ -82,7 +82,10 @@ public class Hierarchy extends HttpServlet {
 		for(List<Integer> i : levels) {
 			out.print("<tr>");
 			for(int j : i) {
-				out.print("<td colspan="+ String.valueOf(colspace.get(j))+">");
+				if(ChildCount.get(j)==0)
+				out.print("<td colspan="+ String.valueOf(colspace.get(j))+" rowspan="+String.valueOf(levels.size())+">");
+				else
+				out.print("<td colspan="+ String.valueOf(colspace.get(j))+">");	
 				out.print(users.get(j).name);
 				out.print("</td>");
 			}
