@@ -45,6 +45,16 @@ public class Hierarchy extends HttpServlet {
 			levels.add(currentLevel);	
 		}
 		
+		// Sort the levels based on the number of children each ID has
+//		for(int i=levels.size()-1;i>=0;i--) {
+//			Collections.sort(levels.get(i),(e1,e2)->{
+//				int childCount1 = ChildCount.get(e2);
+//			    int childCount2 = ChildCount.get(e1);
+//			    return Integer.compare(childCount1, childCount2);
+//			});
+//		}
+
+		
 		HashMap<Integer,Integer> colspace = new HashMap<>(); // Calculating space to make colspan in the table
 		for(int i=levels.size()-1;i>=0;i--) {
 			for(int j=0;j<levels.get(i).size();j++) {
@@ -57,12 +67,12 @@ public class Hierarchy extends HttpServlet {
 			}
 		}
 		
-		for(Map.Entry<Integer, Integer> map:colspace.entrySet()) {
-			System.out.print(map.getKey());
-			System.out.print(" ");
-			System.out.print(map.getValue());
-			System.out.println();
-		}
+//		for(Map.Entry<Integer, Integer> map:colspace.entrySet()) {
+//			System.out.print(map.getKey());
+//			System.out.print(" ");
+//			System.out.print(map.getValue());
+//			System.out.println();
+//		}
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -79,7 +89,6 @@ public class Hierarchy extends HttpServlet {
 			out.print("</tr>");
 		}
 		out.print("</table>");
-		
 		out.println("<form action='home'><button type='submit'>Click here to home page</button></form>");
 		out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
 		out.println("</body></html>");
