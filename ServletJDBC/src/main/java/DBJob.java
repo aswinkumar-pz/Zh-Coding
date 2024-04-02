@@ -2,7 +2,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 public class DBJob {
@@ -15,43 +14,7 @@ public class DBJob {
 	private ResultSet rs = null;
 	private HashMap<Integer,User> hm = null;
 	
-	DBJob() {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connect = DriverManager.getConnection(url,username,password);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	HashMap<Integer,User> executeQueryForFetch(String query) {
-		try {
-			ps = connect.prepareStatement(query);
-			rs = ps.executeQuery();
-			User user = new User();
-			hm = new HashMap<>();
-			while(rs.next()) {
-				user.id = rs.getInt(1);
-				user.name = rs.getString(2);
-				user.manager_id = rs.getInt(3);
-				hm.put(user.id,user);
-				user = new User();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return hm;
-	}
-	
-	void executeUpdateQuery(String query) {
-		try {
-			ps = connect.prepareStatement(query);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	void closeConnections() {
+	private void closeConnections() {
 		try {
 			rs.close();
 		}catch (Exception e) {
@@ -67,8 +30,41 @@ public class DBJob {
 		}catch (Exception e) {
 			;
 		}
-		
 	}
 	
+	HashMap<Integer,User> executeQueryForFetch(String query) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connect = DriverManager.getConnection(url,username,password);
+			ps = connect.prepareStatement(query);
+			rs = ps.executeQuery();
+			User user = new User();
+			hm = new HashMap<>();
+			while(rs.next()) {
+				user.id = rs.getInt(1);
+				user.name = rs.getString(2);
+				user.manager_id = rs.getInt(3);
+				hm.put(user.id,user);
+				user = new User();
+			}
+			closeConnections();
+		} catch (Exception e) {
+			e.printStackTrace();
+			closeConnections();
+		}
+		return hm;
+	}
 	
+	void executeUpdateQuery(String query) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connect = DriverManager.getConnection(url,username,password);
+			ps = connect.prepareStatement(query);
+			ps.executeUpdate();
+			closeConnections();
+		} catch (Exception e) {
+			e.printStackTrace();
+			closeConnections();
+		}
+	}
 }

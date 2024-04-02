@@ -19,9 +19,6 @@ public class Delete extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		DBJob db = new DBJob();
 		TreeMap<Integer,User> users = new TreeMap<>(db.executeQueryForFetch("select * from employee where id!=1"));
-		db.closeConnections();
-		
-		
 		
 		out.print("<html><head>");
 		out.print("<title> Delete Employee </title>");
@@ -48,7 +45,6 @@ public class Delete extends HttpServlet {
 		int manager_id = hm.get(id).manager_id;
 		db.executeUpdateQuery("update employee set manager_id="+manager_id+" where manager_id="+id);
 		db.executeUpdateQuery("delete from employee where id="+id);
-		db.closeConnections();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.print("<html><head>");

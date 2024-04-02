@@ -25,7 +25,6 @@ public class Edit extends HttpServlet {
 		DBJob db = new DBJob();
 		HashMap<Integer,User> users = new HashMap<>();
 		users = db.executeQueryForFetch("select * from employee");
-		db.closeConnections();
 		
 		out.print("<html><head>");
 		out.print("<title> Edit Employee </title>");
@@ -51,7 +50,6 @@ public class Edit extends HttpServlet {
 		
 		DBJob db = new DBJob();
 		users = new TreeMap<>(db.executeQueryForFetch("select * from employee"));
-		db.closeConnections();
 		User user = users.get(id);
 		
 		Queue<Integer> queue = new LinkedList<>();

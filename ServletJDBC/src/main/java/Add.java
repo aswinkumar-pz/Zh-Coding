@@ -19,7 +19,6 @@ public class Add extends HttpServlet {
 		DBJob db = new DBJob();
 		String query = "insert into employee(name,manager_id) value('"+name+"',"+manager_id+")";
 		db.executeUpdateQuery(query);
-		db.closeConnections();
 		PrintWriter out = response.getWriter();
 		out.println("<html><head><title>Success</title></head><body>");
 		out.println("<h3>Employee details added successfully</h3>");
@@ -33,7 +32,6 @@ public class Add extends HttpServlet {
 		DBJob db = new DBJob();
 		HashMap<Integer,User> hm = new HashMap<>();
 		hm = db.executeQueryForFetch("select * from employee");
-		db.closeConnections();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.println("<html><head><title>Enter employee details</title></head><body>");

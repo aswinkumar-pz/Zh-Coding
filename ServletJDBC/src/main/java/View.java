@@ -22,7 +22,6 @@ public class View extends HttpServlet {
 		DBJob db = new DBJob();
 		HashMap<Integer,User> u = db.executeQueryForFetch("select * from employee order by id");
 		TreeMap<Integer,User> users = new TreeMap<>(u);
-		db.closeConnections();
 		for(Map.Entry<Integer,User> user : users.entrySet()) {
 			out.println("<tr>");
 			out.println("<td>");out.println(user.getValue().name+"("+user.getKey()+")");out.println("</td>");
@@ -36,7 +35,6 @@ public class View extends HttpServlet {
 			out.println("</td>");
 			out.println("</tr>");
 		}
-		db.closeConnections();
 		out.print("</table>");
 		out.println("<form action='home'><button type='submit'>Click here to home page</button></form>");
 		out.println("<form action='logout'><button type='submit'>Click here to logout</button></form>");
