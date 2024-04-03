@@ -9,15 +9,15 @@
 	<body>
 		<table>
 			<tr>
-	            <th>ID</th>
+	            <th>Id</th>
 	            <th>Name</th>
-	            <th>Manager ID</th>
+	            <th>Manager_id</th>
 	    	</tr>
-			<s:iterator value="users">
+	    	<s:iterator value="users">
 				<tr>
-					<td>id</td>
-					<td>name</td>
-					<td>manager_id</td>
+					<td><s:property value="top"/></td>
+					<td><s:property value="name"/></td>
+					<td><s:property value="manager_id"/></td>
 				</tr>
 			</s:iterator>
 		</table>

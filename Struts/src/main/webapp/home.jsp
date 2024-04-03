@@ -16,9 +16,9 @@
 			<s:submit name="addsub" value="Click here"/>
 		</s:form>
 		
-		<s:form action="viewDetails">
+		<s:form action="viewDetails"  >
 			<s:label for="viewsub" value="Display all user:"/>
-			<s:submit name="viewsub" placeholder="Click here"/>
+			<s:submit name="viewsub" />
 		</s:form>
 	</body>
 </html>
