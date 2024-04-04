@@ -6,17 +6,35 @@
 	
 	<package name="default" extends="struts-default">
 		
-		<action name="getDetails" class="AddAction" method="input">
-			<result name="input">/add.jsp</result>
+		<action name="goHome">
+			<result>/home.jsp</result>
+		</action>
+		
+		<action name="getDetails" class="DetailsAction">
+			<result>/add.jsp</result>
 		</action>
 		
 		<action name="add" class="AddAction" method="execute">
-			<result name="success">/home.jsp</result>
+			<result name="success">/success.jsp</result>
 		</action>
 		
-		<action name="viewDetails" class="ViewAction">
+		<action name="viewDetails" class="ViewAction" method="execute">
 			<result name="success">/view.jsp</result>
 		</action>
+		
+		<action name="editDetails" class="DetailsAction">
+			<result name="success">/edit.jsp</result>
+		</action>
+		
+		<action name="edit" class="EditAction" method="execute">
+			<result name="success">/editdata.jsp</result>
+		</action>
+		
+		<action name="edit" class="EditAction" method="finish">
+			<result name="success">/success.jsp</result>
+		</action>
+		
+		
 	</package>
 	
 </struts>

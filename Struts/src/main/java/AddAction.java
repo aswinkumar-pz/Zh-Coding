@@ -7,7 +7,17 @@ public class AddAction {
 	private DBJob db = new DBJob();
 	private HashMap<Integer,User> users = db.executeQueryForFetch("select * from employee");
 	private List<Integer> ids = new ArrayList<>(users.keySet());
+	private String message = "";
 	
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -38,6 +48,7 @@ public class AddAction {
 	
 	public String execute() {
 		db.executeUpdateQuery("insert into employee(name,manager_id) values('"+this.name+"',"+this.manager_id+")");
+		message = "Employee added successfully";
 		return "success";
 	}
 }

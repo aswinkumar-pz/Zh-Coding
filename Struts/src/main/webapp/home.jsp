@@ -4,21 +4,26 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Employee management</title>
-	</head>
-	<body>
-		<h1>Employee management</h1>
-		<br>
-		<s:form action="getDetails" method="input">
-			<s:label for="addsub" value="Add user:"/>
-			<s:submit name="addsub" value="Click here"/>
-		</s:form>
-		
-		<s:form action="viewDetails"  >
-			<s:label for="viewsub" value="Display all user:"/>
-			<s:submit name="viewsub" />
-		</s:form>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Management</title>
+</head>
+<body>
+    <h1>Employee Management</h1>
+    <br><br>
+    Add employee details: 
+    <s:a action="getDetails">
+        <button>Click here</button>
+    </s:a>
+    <br><br>
+    View employee details:
+	<s:a action="viewDetails">
+        <button>Click here</button>
+    </s:a>
+    <br><br>
+    Edit employee details:
+	<s:a action="editDetails">
+        <button>Click here</button>
+    </s:a>
+</body>
 </html>
