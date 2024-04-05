@@ -12,7 +12,7 @@
     <h1>Employee Management</h1>
     <br><br>
     Add employee details: 
-    <s:a action="getDetails">
+    <s:a action="addDetails">
         <button>Click here</button>
     </s:a>
     <br><br>
@@ -23,6 +23,16 @@
     <br><br>
     Edit employee details:
 	<s:a action="editDetails">
+        <button>Click here</button>
+    </s:a>
+    <br><br>
+    Delete employee details:
+	<s:a action="deleteDetails">
+        <button>Click here</button>
+    </s:a>
+    <br><br>
+    View employee hierarchy:
+	<s:a action="viewHierarchy">
         <button>Click here</button>
     </s:a>
 </body>

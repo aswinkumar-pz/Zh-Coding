@@ -3,14 +3,13 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
     "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
-	
 	<package name="default" extends="struts-default">
 		
 		<action name="goHome">
 			<result>/home.jsp</result>
 		</action>
 		
-		<action name="getDetails" class="DetailsAction">
+		<action name="addDetails" class="DetailsAction">
 			<result>/add.jsp</result>
 		</action>
 		
@@ -18,11 +17,11 @@
 			<result name="success">/success.jsp</result>
 		</action>
 		
-		<action name="viewDetails" class="ViewAction" method="execute">
+		<action name="viewDetails" class="DetailsAction" method="execute">
 			<result name="success">/view.jsp</result>
 		</action>
 		
-		<action name="editDetails" class="DetailsAction">
+		<action name="editDetails" class="DetailsAction" method="edit">
 			<result name="success">/edit.jsp</result>
 		</action>
 		
@@ -30,11 +29,25 @@
 			<result name="success">/editdata.jsp</result>
 		</action>
 		
-		<action name="edit" class="EditAction" method="finish">
+		<action name="finishedit" class="EditAction" method="finish">
 			<result name="success">/success.jsp</result>
 		</action>
 		
+		<action name="deleteDetails" class="DetailsAction" method="edit">
+			<result name="success">/delete.jsp</result>
+		</action>
+		
+		<action name="delete" class="DeleteAction" method="execute">
+			<result name="success">/deletedata.jsp</result>
+		</action>
+		
+		<action name="finishdelete" class="DeleteAction" method="finish">
+			<result name="success">/success.jsp</result>
+		</action>
+		
+		<action name="viewHierarchy" class="HierarchyAction">
+			<result name="success">/hierarchy.jsp</result>
+		</action>
 		
 	</package>
-	
 </struts>

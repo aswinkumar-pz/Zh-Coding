@@ -1,14 +1,13 @@
-import java.util.*;
+import com.opensymphony.xwork2.ActionSupport;
 
-public class AddAction {
+public class AddAction extends ActionSupport {
 
-	private String name;
+	private static final long serialVersionUID = 1L;
+	
+	private String name="";
 	private int manager_id;
 	private DBJob db = new DBJob();
-	private HashMap<Integer,User> users = db.executeQueryForFetch("select * from employee");
-	private List<Integer> ids = new ArrayList<>(users.keySet());
 	private String message = "";
-	
 	
 	public String getMessage() {
 		return message;
@@ -17,7 +16,8 @@ public class AddAction {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -26,14 +26,6 @@ public class AddAction {
 		this.name = name;
 	}
 	
-	public List<Integer> getIds() {
-		return ids;
-	}
-
-	public void setIds(List<Integer> ids) {
-		this.ids = ids;
-	}
-
 	public int getManager_id() {
 		return manager_id;
 	}
@@ -46,9 +38,19 @@ public class AddAction {
 		return "input";
 	}
 	
+	@Override
 	public String execute() {
-		db.executeUpdateQuery("insert into employee(name,manager_id) values('"+this.name+"',"+this.manager_id+")");
-		message = "Employee added successfully";
-		return "success";
+		try {
+			if(name=="") {
+				 throw new Exception("Name field is empty");
+			}
+			db.executeUpdateQuery("insert into employee(name,manager_id) values('"+this.name+"',"+this.manager_id+")");
+			message = "Employee added successfully";
+		}
+		catch(Exception e)
+		{
+			message = e.getMessage() + "! Please try again";
+		}
+		return SUCCESS;
 	}
 }

@@ -10,10 +10,12 @@
 	</head>
 	<body>
 		<h1>Update the details</h1>
-		<s:form action="edit" method="post">
+		<s:form action="finishedit" method="post">
 			<s:label for="name">Employee name: </s:label>
-			<s:textfield name="name" value="name"/>
-			
+			<s:hidden name="id" value="%{id}"/>
+			<s:textfield name="name" value="%{name}"/>
+			<s:select name="manager_id" list="users" listKey="key" listValue="value"/>
+			<s:submit value="Edit"/>
 		</s:form>
 	</body>
 </html>

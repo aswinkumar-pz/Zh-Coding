@@ -4,12 +4,13 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>Edit employee</title>
 	</head>
 	<body>
 		<h1>Edit employee details</h1>
 		<s:form  action="edit" method="post">
-			<s:select name="user" list="idName" label="Select employee to edit"/>
+			<s:label for="id" value="Select employee to edit"/>
+			<s:select name="id" list="users" listKey="key" listValue="value"/>
 			<s:submit value="Submit"/>
 		</s:form>
 	</body>

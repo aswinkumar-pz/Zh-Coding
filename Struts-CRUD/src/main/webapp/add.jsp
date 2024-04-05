@@ -10,7 +10,7 @@
 		<h1>Add user</h1>
 		<s:form action="add" method="post">
 			<s:textfield name="name" label="Enter name: "/>
-			<s:select name="manager_id" list="ids" label="Select manager_id"/>
+			<s:select name="manager_id" list="users" listKey="key" listValue="value" label="Select manager"/>
 			<s:hidden name="message" value="Data added successfully"/>
 			<s:submit value="Submit"/>
 		</s:form>
