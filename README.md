@@ -11,4 +11,5 @@
 - #### 02/04/2024 - DB code updated. Started coding with strut2.
 - #### 03/04/2024 - Add option completed, view almost completed using strut2
 - #### 04/04/2024 - Add, View fully completed with all navigations, working on edit option, partially completed
+- #### 05/04/2003 - CRUD using strut completed, starting learning on interceptors and making authentication pages
 
