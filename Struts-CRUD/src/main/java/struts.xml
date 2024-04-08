@@ -2,52 +2,97 @@
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
     "http://struts.apache.org/dtds/struts-2.5.dtd">
+
 <struts>
 	<package name="default" extends="struts-default">
 		
+		<interceptors>
+			<interceptor name="AuthInterceptor" class="AuthInterceptor"/>
+			<interceptor-stack name="AuthStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="AuthInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>	
+		
+		<global-results>
+        	<result name="login">/login.jsp</result>
+    	</global-results>
+		
+		<action name="login">
+			<result>login.jsp</result>
+		</action>
+		
+        <action name="loginAction" class="LoginAction">
+            <result name="success">/home.jsp</result>
+            <result name="input">/login.jsp</result>
+            <result name="error">/login.jsp</result>
+        </action>
+
+        <action name="logoutAction" class="LogoutAction">
+            <interceptor-ref name="defaultStack"/>
+            <result name="success">/login.jsp</result>
+        </action>
+        
+        <action name="">
+			<interceptor-ref name="AuthStack"/>
+			<result>/home.jsp</result>
+		</action>
+		
 		<action name="goHome">
+			<interceptor-ref name="AuthStack"/>
 			<result>/home.jsp</result>
 		</action>
 		
 		<action name="addDetails" class="DetailsAction">
+			<interceptor-ref name="AuthStack"/>
 			<result>/add.jsp</result>
 		</action>
 		
 		<action name="add" class="AddAction" method="execute">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/success.jsp</result>
 		</action>
 		
 		<action name="viewDetails" class="DetailsAction" method="execute">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/view.jsp</result>
 		</action>
 		
 		<action name="editDetails" class="DetailsAction" method="edit">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/edit.jsp</result>
 		</action>
 		
 		<action name="edit" class="EditAction" method="execute">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/editdata.jsp</result>
 		</action>
 		
 		<action name="finishedit" class="EditAction" method="finish">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/success.jsp</result>
 		</action>
 		
 		<action name="deleteDetails" class="DetailsAction" method="edit">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/delete.jsp</result>
 		</action>
 		
 		<action name="delete" class="DeleteAction" method="execute">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/deletedata.jsp</result>
 		</action>
 		
 		<action name="finishdelete" class="DeleteAction" method="finish">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/success.jsp</result>
 		</action>
 		
 		<action name="viewHierarchy" class="HierarchyAction">
+			<interceptor-ref name="AuthStack"/>
 			<result name="success">/hierarchy.jsp</result>
 		</action>
 		
 	</package>
+	
 </struts>

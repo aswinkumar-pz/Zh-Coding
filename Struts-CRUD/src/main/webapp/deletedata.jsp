@@ -13,13 +13,17 @@
 		<s:form action="finishdelete" method="post">
 			<s:hidden name="id" value="%{id}"/>
 			<label>Employee name:</label>
-			<s:property value="%{name}"/><br>
+			<s:property value="%{user.name}"/><br>
 			<label>Manager name:</label>
-			<s:property value="users[manager_id].name"/>
+			<s:property value="users[user.manager_id].name"/>
 			
 			<s:label for="new_manager_id" value="Select new manager for juniors"/>
 			<s:select name="new_manager_id" list="users" listKey="key" listValue="value"/>
 			<s:submit value="Delete"/>
 		</s:form>
+		<br><br>
+    <s:a action="logoutAction">
+        <button>Logout</button>
+    </s:a>
 	</body>
 </html>

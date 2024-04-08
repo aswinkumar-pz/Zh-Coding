@@ -26,5 +26,9 @@
 		<s:a action="goHome">
 			<button>Go to home page</button>
 		</s:a>
+		<br><br>
+    <s:a action="logoutAction">
+        <button>Logout</button>
+    </s:a>
 	</body>
 </html>

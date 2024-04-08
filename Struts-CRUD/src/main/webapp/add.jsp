@@ -14,5 +14,9 @@
 			<s:hidden name="message" value="Data added successfully"/>
 			<s:submit value="Submit"/>
 		</s:form>
+		<br><br>
+    <s:a action="logoutAction">
+        <button>Logout</button>
+    </s:a>
 	</body>
 </html>

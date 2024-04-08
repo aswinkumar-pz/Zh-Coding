@@ -7,30 +7,22 @@ import java.util.TreeMap;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class HierarchyAction extends ActionSupport {
-	
+
 	private static final long serialVersionUID = 1L;
-	private DBJob db = new DBJob();
-	private TreeMap<Integer,User> users;
-	private HashMap<Integer,Integer> colspace = new HashMap<>(); 
+	private UserDAO udao = new UserDAO();
+	private TreeMap<Integer, User> users;
+	private HashMap<Integer, Integer> colspace = new HashMap<>();
 	private List<List<Integer>> levels;
-	private HashMap<Integer,Integer> ChildCount;
-	
-	public DBJob getDb() {
-		return db;
-	}
-	
-	public void setDb(DBJob db) {
-		this.db = db;
-	}
-	
-	public TreeMap<Integer,User> getUsers() {
+	private HashMap<Integer, Integer> ChildCount;
+
+	public TreeMap<Integer, User> getUsers() {
 		return users;
 	}
-	
-	public void setUsers(TreeMap<Integer,User> users) {
+
+	public void setUsers(TreeMap<Integer, User> users) {
 		this.users = users;
 	}
-	
+
 	public HashMap<Integer, Integer> getColspace() {
 		return colspace;
 	}
@@ -56,46 +48,46 @@ public class HierarchyAction extends ActionSupport {
 	}
 
 	public String execute() {
-		
-		users = new TreeMap<>(db.executeQueryForFetch("select * from employee"));
-		
+
+		users = new TreeMap<>(udao.getAllEmployee());
+
 		ChildCount = new HashMap<>(); // To count number of direct juniors for each employee
-		for(Map.Entry<Integer, User> i:users.entrySet()) {
+		for (Map.Entry<Integer, User> i : users.entrySet()) {
 			ChildCount.put(i.getKey(), 0);
 		}
-		for(Map.Entry<Integer, User> i:users.entrySet()) {
-			if(i.getKey()==1)
+		for (Map.Entry<Integer, User> i : users.entrySet()) {
+			if (i.getKey() == 1)
 				continue;
-			ChildCount.put(i.getValue().manager_id, ChildCount.get(i.getValue().manager_id)+1);	
+			ChildCount.put(i.getValue().getManager_id(), ChildCount.get(i.getValue().getManager_id()) + 1);
 		}
-		
+
 		levels = new ArrayList<>(); // Assigning levels so that they can easily placed in the table
 		List<Integer> currentLevel = new ArrayList<>();
 		List<Integer> temp = new ArrayList<>();
 		currentLevel.add(1);
 		levels.add(currentLevel);
-		while(!currentLevel.isEmpty()) {
-			for(int i:currentLevel) {
-				for(Map.Entry<Integer, User> user:users.entrySet()) {
-					if(user.getValue().manager_id == i) {
+		while (!currentLevel.isEmpty()) {
+			for (int i : currentLevel) {
+				for (Map.Entry<Integer, User> user : users.entrySet()) {
+					if (user.getValue().getManager_id() == i) {
 						temp.add(user.getKey());
 					}
 				}
 			}
 			currentLevel = temp;
 			temp = new ArrayList<Integer>();
-			levels.add(currentLevel);	
+			levels.add(currentLevel);
 		}
 
 		// Calculating space to make colspan in the table
-		for(int i=levels.size()-1;i>=0;i--) {
-			for(int j=0;j<levels.get(i).size();j++) {
-				if(ChildCount.get((levels.get(i)).get(j))==0) {
-					colspace.put((levels.get(i)).get(j),1);
-					
+		for (int i = levels.size() - 1; i >= 0; i--) {
+			for (int j = 0; j < levels.get(i).size(); j++) {
+				if (ChildCount.get((levels.get(i)).get(j)) == 0) {
+					colspace.put((levels.get(i)).get(j), 1);
+
 				}
-				int id = users.get((levels.get(i)).get(j)).manager_id;
-				colspace.put(id,colspace.getOrDefault(id,0)+colspace.get((levels.get(i)).get(j)));	
+				int id = users.get((levels.get(i)).get(j)).getManager_id();
+				colspace.put(id, colspace.getOrDefault(id, 0) + colspace.get((levels.get(i)).get(j)));
 			}
 		}
 		return SUCCESS;

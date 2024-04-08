@@ -3,12 +3,11 @@ import java.util.TreeMap;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class DetailsAction extends ActionSupport {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	private DBJob db = new DBJob();
-	private TreeMap<Integer,User> users;
-	
+
+	private UserDAO udao = new UserDAO();
+	private TreeMap<Integer, User> users;
 
 	public TreeMap<Integer, User> getUsers() {
 		return users;
@@ -19,11 +18,12 @@ public class DetailsAction extends ActionSupport {
 	}
 
 	public String execute() {
-		users = new TreeMap<>(db.executeQueryForFetch("select * from employee"));		
+		users = new TreeMap<>(udao.getAllEmployee());
 		return SUCCESS;
 	}
+
 	public String edit() {
-		users = new TreeMap<>(db.executeQueryForFetch("select * from employee where id!=1"));
+		users = new TreeMap<>(udao.getAllEmployee());
 		return SUCCESS;
 	}
 

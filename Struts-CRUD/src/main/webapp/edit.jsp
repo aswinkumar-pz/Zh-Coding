@@ -13,5 +13,9 @@
 			<s:select name="id" list="users" listKey="key" listValue="value"/>
 			<s:submit value="Submit"/>
 		</s:form>
+		<br><br>
+    <s:a action="logoutAction">
+        <button>Logout</button>
+    </s:a>
 	</body>
 </html>
