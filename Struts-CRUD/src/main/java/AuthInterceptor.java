@@ -8,9 +8,13 @@ public class AuthInterceptor extends AbstractInterceptor {
 
     private static final long serialVersionUID = 1L;
 
+    private String message;
+    
+    
     @Override
     public String intercept(ActionInvocation invocation) throws Exception {
         if (!isAuthenticated()) {
+        	ActionContext.getContext().put("message", "Please login first!!!");
             return "login";
         }
         return invocation.invoke();
@@ -23,4 +27,12 @@ public class AuthInterceptor extends AbstractInterceptor {
     private Map<String, Object> getSession() {
         return ActionContext.getContext().getSession();
     }
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }
