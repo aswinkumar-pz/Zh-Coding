@@ -67,6 +67,8 @@ public class EditAction {
 		user = users.get(id);
 		name = user.getName();
 		manager_id = user.getManager_id();
+		
+		
 
 		List<List<Integer>> levels = new ArrayList<>(); // Assigning levels so that they can easily placed in the table
 		List<Integer> currentLevel = new ArrayList<>();
@@ -100,6 +102,12 @@ public class EditAction {
 	}
 
 	public String finish() {
+		
+		if(name.strip().isEmpty()) {
+			message = "Your name field should not be empty!!";
+			return "success";
+		}
+		
 		user = new User();
 		user.setId(id);
 		user.setName(name);

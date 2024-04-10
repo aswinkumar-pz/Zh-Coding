@@ -24,6 +24,7 @@ public class DetailsAction extends ActionSupport {
 
 	public String edit() {
 		users = new TreeMap<>(udao.getAllEmployee());
+		users.remove(1);	
 		return SUCCESS;
 	}
 

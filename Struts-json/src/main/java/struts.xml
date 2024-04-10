@@ -9,14 +9,21 @@
 		<result-types>
         	<result-type name="json" class="org.apache.struts2.json.JSONResult"/>
     	</result-types>
+		
 		<action name="employees" class="EmployeeAction" method="displayAll">
 			<result name="success" type="json">
 				<param name="root">employees</param>
 			</result>
+			<allowed-methods>GET</allowed-methods>
 		</action>
 		
 		<action name="add" class="EmployeeAction" method="addEmployee">
-			<result name="success" type="json"/>
+			<result name="success" type="json">
+				<param name="root">message</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">message</param>
+			</result>
 			<param name="name">name</param>
 			<param name="manager_id">manager_id</param>
 		</action>
@@ -25,13 +32,66 @@
 			<result name="success" type="json">
 				<param name="root">employee</param>
 			</result>
+			<result name="error" type="json">
+				<param name="root">message</param>
+			</result>
+			
+			<param name="id">id</param>
+		</action> 
+		
+		<action name="getSeniors" class="EmployeeAction" method="getAllSeniors">
+			<result name="success" type="json">
+				<param name="root">employees</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">message</param>
+			</result>
+			
 			<param name="id">id</param>
 		</action>
 		
-		<action name="getSeniors" class="EmployeeAction" method="getAllSeniors">
-			<result name="success" type="json"/>
+		<action name="edit" class="EmployeeAction" method="updateEmployee">
+			<result name="success" type="json">
+				<param name="root">message</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">message</param>
+			</result>
 			<param name="id">id</param>
 		</action>
+		
+		<action name="getSeniorsOnly" class="EmployeeAction" method="getAllSeniorsExceptOne">
+			<result name="success" type="json">
+				<param name="root">employees</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">message</param>
+			</result>
+			<param name="id">id</param>
+		</action>
+		
+		<action name="updateManagerId" class="EmployeeAction" method="updateJuniorsManagerId">
+			<result name="success" type="json">
+				<param name="root">message</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">message</param>
+			</result>
+			<param name="id">id</param>
+			<param name="manager_id">manager_id</param>
+		</action>
+		
+		<action name="delete" class="EmployeeAction" method="deleteEmployee">
+			<result name="success" type="json">
+				<param name="root">message</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">message</param>
+			</result>
+			<param name="id">id</param>
+		</action>
+		
+		
 		
 		
 		
