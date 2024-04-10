@@ -14,3 +14,5 @@
 - #### 05/04/2024 - CRUD using strut completed, starting learning on interceptors and making authentication pages
 - #### 08/04/2024 - Authentication using interceptor is done, started to convert in json
 - #### 09/04/2024 - Create and read operation converted into JSON response, edit is partially done
+- #### 10/04/2024 - Edit and Delete operations converted into JSON response, started working with Lyte framework
+
