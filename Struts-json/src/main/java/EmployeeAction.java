@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class EmployeeAction extends ActionSupport {
-
+	
 	private static final long serialVersionUID = 1L;
 	private List<Employee> employees = null;
 	private Employee employee = null;
@@ -16,6 +16,7 @@ public class EmployeeAction extends ActionSupport {
 	private String manager_id="";
 	private EmployeeDAO employeeDAO = new EmployeeDAO();
 	private String message = "";
+	private ListResponse listResponse = new ListResponse();
 	
 	
 	public Employee getEmployee() {
@@ -66,10 +67,19 @@ public class EmployeeAction extends ActionSupport {
 		this.message = message;
 	}
 
+	public ListResponse getListResponse() {
+		return listResponse;
+	}
+
+	public void setListResponse(ListResponse listResponse) {
+		this.listResponse = listResponse;
+	}
+
 	/* Display all employee */
 	public String displayAll() {
 		
 		employees = new ArrayList<>(new TreeMap<>(employeeDAO.getAllEmployee()).values());
+		listResponse.setEmployees((employees));
 		return SUCCESS;
 	}
 	
@@ -110,7 +120,12 @@ public class EmployeeAction extends ActionSupport {
 		}
 		else {
 			message = employee.toString();
-			message = message+"-"+employeeDAO.getEmployeeById(employee.getManager_id()).getName();
+			try {
+				message = message+"-"+employeeDAO.getEmployeeById(employee.getManager_id()).getName();
+			}
+			catch (Exception e) {
+				;
+			}
 			return SUCCESS;
 		}
 		
@@ -261,15 +276,17 @@ public class EmployeeAction extends ActionSupport {
 	
 	/* Delete employee details */
 	public String deleteEmployee() {
-		
 		int id = Integer.parseInt(this.id);
 		if(employeeDAO.getEmployeeById(id)==null) {
-			message = "Employee not found";
+			message = "Invalid id";
+			System.out.println(message);
 			return ERROR;
 		}
 		employeeDAO.deleteEmployeeById(id);
 		message = "Employee deleted successfully";
 		return SUCCESS;
 	}
+
+	
 
 }

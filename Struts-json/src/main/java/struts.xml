@@ -12,9 +12,8 @@
 		
 		<action name="employees" class="EmployeeAction" method="displayAll">
 			<result name="success" type="json">
-				<param name="root">employees</param>
+				<param name="root">listResponse</param>
 			</result>
-			<allowed-methods>GET</allowed-methods>
 		</action>
 		
 		<action name="add" class="EmployeeAction" method="addEmployee">
@@ -89,12 +88,7 @@
 				<param name="root">message</param>
 			</result>
 			<param name="id">id</param>
-		</action>
-		
-		
-		
-		
-		
+		</action>	
 		<action name="hi">
 			<result>/home.jsp</result>
 		</action>
